@@ -27,6 +27,11 @@ public class LoginBean {
     private String numero;
     @Inject
     private CiudadanoBean ciudadanoControlador;
+    @Inject
+    private Mensajes mensaje;
+    @Inject
+    private FuncionarioBean funcionarioControlador;
+    
     
     /**
      * Creates a new instance of Login
@@ -38,8 +43,13 @@ public class LoginBean {
     *Metodo para ingresar al sistema
     */
     public String ingresar() {
-        if () {
-            
+        if (ciudadanoControlador.login(tipo, numero)) {
+            return "ciudadano/historialVacunas";
+        } else if(funcionarioControlador.login(tipo, numero)) {
+            return "funcionario/historialVacunas";
+        } else {
+            mensaje.setMensaje("mensajes('Error!', 'El tipo o numero de documento no es correcto!', 'error');");
+            return "index";
         }
     }
     
@@ -83,6 +93,20 @@ public class LoginBean {
      */
     public void setCiudadanoControlador(CiudadanoBean ciudadanoControlador) {
         this.ciudadanoControlador = ciudadanoControlador;
+    }
+
+    /**
+     * @return the funcionarioControlador
+     */
+    public FuncionarioBean getFuncionarioControlador() {
+        return funcionarioControlador;
+    }
+
+    /**
+     * @param funcionarioControlador the funcionarioControlador to set
+     */
+    public void setFuncionarioControlador(FuncionarioBean funcionarioControlador) {
+        this.funcionarioControlador = funcionarioControlador;
     }
     
 }
