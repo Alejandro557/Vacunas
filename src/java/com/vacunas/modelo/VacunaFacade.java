@@ -34,7 +34,7 @@ public class VacunaFacade extends AbstractFacade<Vacuna> {
         super(Vacuna.class);
     }
     
-    public List<Vacuna> getVacunas(DatosPersona persona) {
+    public List<Vacuna> getVacunasPorPersona(DatosPersona persona) {
         List<Vacuna> listVacunas = new ArrayList<>();
         try {
             query = em.createQuery("select v from Vacuna v where v.datosPersonaId.personaId = :id");

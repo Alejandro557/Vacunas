@@ -6,6 +6,7 @@
 package com.vacunas.modelo;
 
 import com.vacunas.entity.DatosPersona;
+import java.util.Iterator;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,10 +35,15 @@ public class DatosPersonaFacade extends AbstractFacade<DatosPersona> {
     public DatosPersona login(DatosPersona persona) {
         DatosPersona persona2 = new DatosPersona();
         try {
-            query = em.createQuery("select p from DatosPersona p where p.personaTipoDoc = :tipo and p.personaNumeroDoc = :numero");
+            query = em.createQuery("select p.personaId from DatosPersona p where p.personaTipoDoc = :tipo and p.personaNumeroDoc = :numero");
             query.setParameter("tipo", persona.getPersonaTipoDoc());
             query.setParameter("numero", persona.getPersonaNumeroDoc());
-            return persona2 = (DatosPersona) query.getSingleResult();
+            Iterator iter = query.getResultList().iterator();
+            while(iter.hasNext()) {
+                Object objeto = (Object) iter.next();
+                persona2.setPersonaId((Integer)objeto);
+            }
+            return persona2;
         } catch (Exception e) {
             System.out.println("Error en el modelo datosPersonaFacade.login");
             e.printStackTrace();

@@ -25,14 +25,14 @@
                                     <h:message for="nombre" class="text-danger"/>
                                 </div>
                             </h:form>
-                            <h:dataTable id="tabla" class="table table-striped table-responsive-md table-hover">
-                                <h:column><f:facet name="header"><h:outputLabel value="Nombre"/></f:facet></h:column>
-                                <h:column><f:facet name="header"><h:outputLabel value="Docis"/></f:facet></h:column>
-                                <h:column><f:facet name="header"><h:outputLabel value="Fecha de aplicación"/></f:facet></h:column>
-                                <h:column><f:facet name="header"><h:outputLabel value="No lote"/></f:facet></h:column>
-                                <h:column><f:facet name="header"><h:outputLabel value="IPS"/></f:facet></h:column>
-                                <h:column><f:facet name="header"><h:outputLabel value="Proxima vacuna"/></f:facet></h:column>
-                                <h:column><f:facet name="header"><h:outputLabel value="Vacuna aplicada por"/></f:facet></h:column>
+                            <h:dataTable value="#{ciudadanoBean.listVacunas}" var="i" id="tabla" class="table table-striped table-responsive-md table-hover">
+                                <h:column><f:facet name="header"><h:outputLabel value="Nombre"/></f:facet><h:outputLabel value="#{i.datosPersonaId.personaNombre}"/></h:column>
+                                <h:column><f:facet name="header"><h:outputLabel value="Docis"/></f:facet><h:outputLabel value="#{i.vacunaDocis}"/></h:column>
+                                <h:column><f:facet name="header"><h:outputLabel value="Fecha de aplicación"/></f:facet><h:outputLabel value="#{i.vacunaFecha}"/></h:column>
+                                <h:column><f:facet name="header"><h:outputLabel value="No lote"/></f:facet><h:outputLabel value="#{i.vacunaNoLote}"/></h:column>
+                                <h:column><f:facet name="header"><h:outputLabel value="IPS"/></f:facet><h:outputLabel value="#{i.vacunaIps}"/></h:column>
+                                <h:column><f:facet name="header"><h:outputLabel value="Proxima vacuna"/></f:facet><h:outputLabel value="#{i.vacunaProxima}"/></h:column>
+                                <h:column><f:facet name="header"><h:outputLabel value="Vacuna aplicada por"/></f:facet><h:outputLabel value="#{i.personaVacunaId.personaVacunaNombre}"</h:column>
                             </h:dataTable>
                         </div>
                     </div>

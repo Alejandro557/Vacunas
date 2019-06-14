@@ -46,7 +46,7 @@ public class LoginBean {
         if (ciudadanoControlador.login(tipo, numero)) {
             return "ciudadano/historialVacunas";
         } else if(funcionarioControlador.login(tipo, numero)) {
-            return "funcionario/historialVacunas";
+            return "funcionario/Ciudadano";
         } else {
             mensaje.setMensaje("mensajes('Error!', 'El tipo o numero de documento no es correcto!', 'error');");
             return "index";
@@ -107,6 +107,20 @@ public class LoginBean {
      */
     public void setFuncionarioControlador(FuncionarioBean funcionarioControlador) {
         this.funcionarioControlador = funcionarioControlador;
+    }
+
+    /**
+     * @return the mensaje
+     */
+    public Mensajes getMensaje() {
+        return mensaje;
+    }
+
+    /**
+     * @param mensaje the mensaje to set
+     */
+    public void setMensaje(Mensajes mensaje) {
+        this.mensaje = mensaje;
     }
     
 }
