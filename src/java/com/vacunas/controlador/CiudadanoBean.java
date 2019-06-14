@@ -43,7 +43,8 @@ public class CiudadanoBean implements Serializable {
     public boolean login(String tipo, String numero) {
         persona.setPersonaTipoDoc(tipo);
         persona.setPersonaNumeroDoc(numero);
-        if (ciudadanoDAO.login(persona).getPersonaId()!=null) {
+        persona = ciudadanoDAO.login(persona);
+        if (persona.getPersonaId()!=null) {
             listVacunas = vacunaDAO.getVacunasPorPersona(persona);
             return true;
         } else {
