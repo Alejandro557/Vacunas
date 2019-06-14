@@ -5,12 +5,7 @@
  */
 package com.vacunas.controlador;
 
-import com.vacunas.entity.*;
 import com.vacunas.helperBean.Mensajes;
-import com.vacunas.modelo.DatosPersonaFacade;
-import com.vacunas.modelo.FuncionarioSaludFacade;
-import com.vacunas.modelo.VacunaFacade;
-import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
