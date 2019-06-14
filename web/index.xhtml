@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Vacunas</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./WEB-INF/templates/templateIndex.xhtml">
+            <ui:define name="content">
+                <div class="container mt-5 mb-5">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-5">
+                            <div class="card">
+                                <div class="card-header bg-dark">
+                                    <h3 class="text-center text-light">Ingresar</h3>
+                                </div>
+                                <div class="card-body">
+                                    <h:form>
+                                        <div class="row">
+                                            <div class="col-12 col-md-6">
+                                                <h:outputLabel for="numeroDoc" value="Numero de documento"/>
+                                                <h:inputText value="#{login.numero}" id="numeroDoc" class="form-control" required="true" a:placeholder="Ingresa tu documento" requiredMessage="Ingresa tu documento!" validatorMessage="Error por favor vuelva a intentarlo">
+                                                    <f:validateLength maximum="40"/>
+                                                </h:inputText>
+                                                <h:message for="numeroDoc" class="text-danger"/>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <h:outputLabel for="tipo" value="Tipo de documento"/>
+                                                <h:selectOneMenu value="#{login.tipo}" id="tipo" class="custom-select" required="true" requiredMessage="Selecciona un tipo de documento!">
+                                                    <f:selectItem itemLabel="---Seleccione---"/>
+                                                    <f:selectItem itemValue="CC" itemLabel="CC"/>
+                                                    <f:selectItem itemValue="TI" itemLabel="TI"/>
+                                                    <f:selectItem itemValue="Registro civil" itemLabel="Registro civil"/>
+                                                </h:selectOneMenu>
+                                                <h:message for="tipo" class="text-danger"/>
+                                            </div>
+                                            <div class="col-12 mt-3">
+                                                <h:commandButton action="#{login.ingresar}" class="btn btn-primary btn-block" value="Ingresar"/>
+                                                <script>#{mensajes.mensaje}</script>
+                                            </div>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
