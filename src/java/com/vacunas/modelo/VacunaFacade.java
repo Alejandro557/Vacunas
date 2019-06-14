@@ -46,5 +46,4 @@ public class VacunaFacade extends AbstractFacade<Vacuna> {
         }
         return null;
     }
-    
 }

@@ -7,6 +7,7 @@ package com.vacunas.modelo;
 
 import com.vacunas.entity.DatosPersona;
 import java.util.Iterator;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

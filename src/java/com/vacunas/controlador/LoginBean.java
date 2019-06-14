@@ -46,6 +46,8 @@ public class LoginBean {
         if (ciudadanoControlador.login(tipo, numero)) {
             return "ciudadano/historialVacunas";
         } else if(funcionarioControlador.login(tipo, numero)) {
+            funcionarioControlador.getAllCiudadanos();
+            funcionarioControlador.GetAllVacunas();
             return "funcionario/Ciudadano";
         } else {
             mensaje.setMensaje("mensajes('Error!', 'El tipo o numero de documento no es correcto!', 'error');");

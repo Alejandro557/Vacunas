@@ -29,15 +29,15 @@
                                         <h3 class="card-title text-center text-light">Historial de vacunas</h3>
                                     </div>
                                     <div class="card-body">
-                                        <h:dataTable id="vacunas" class="table table-striped table-hover table-responsive-md">
-                                            <h:column><f:facet name="header"><h:outputLabel value="Nombre paciente"/></f:facet></h:column>
-                                            <h:column><f:facet name="header"><h:outputLabel value="Nombre vacuna"/></f:facet></h:column>
-                                            <h:column><f:facet name="header"><h:outputLabel value="Docis"/></f:facet></h:column>
-                                            <h:column><f:facet name="header"><h:outputLabel value="Fecha de aplicación"/></f:facet></h:column>
-                                            <h:column><f:facet name="header"><h:outputLabel value="No de lote"/></f:facet></h:column>
-                                            <h:column><f:facet name="header"><h:outputLabel value="IPS"/></f:facet></h:column>
-                                            <h:column><f:facet name="header"><h:outputLabel value="Proxima vacuna"/></f:facet></h:column>
-                                            <h:column><f:facet name="header"><h:outputLabel value="Nombre del laboratorio"/></f:facet></h:column>
+                                        <h:dataTable id="vacunas" value="#{funcionarioBean.listaVacunas}" var="i" class="table table-striped table-hover table-responsive-md">
+                                            <h:column><f:facet name="header"><h:outputLabel value="Nombre paciente"/></f:facet><h:outputLabel value="#{i.datosPersonaId.personaNombre}"/></h:column>
+                                            <h:column><f:facet name="header"><h:outputLabel value="Nombre vacuna"/></f:facet><h:outputLabel value="#{i.vacunaNombre}"/></h:column>
+                                            <h:column><f:facet name="header"><h:outputLabel value="Docis"/></f:facet><h:outputLabel value="#{i.vacunaDocis}"/></h:column>
+                                            <h:column><f:facet name="header"><h:outputLabel value="Fecha de aplicación"/></f:facet><h:outputLabel value="#{i.vacunaFecha}"/></h:column>
+                                            <h:column><f:facet name="header"><h:outputLabel value="No de lote"/></f:facet><h:outputLabel value="#{i.vacunaNoLote}"/></h:column>
+                                            <h:column><f:facet name="header"><h:outputLabel value="IPS"/></f:facet><h:outputLabel value="#{i.vacunaIps}"/></h:column>
+                                            <h:column><f:facet name="header"><h:outputLabel value="Proxima vacuna"/></f:facet><h:outputLabel value="#{i.vacunaProxima}"/></h:column>
+                                            <h:column><f:facet name="header"><h:outputLabel value="Nombre del laboratorio"/></f:facet><h:outputLabel value="#{i.laboratorioId.laboratorioNombre}"/></h:column>
                                         </h:dataTable>
                                     </div>
                                 </div>
@@ -272,16 +272,16 @@
                                         <h:message for="nombre" class="text-danger"/>
                                     </div>
                                 </h:form>
-                                <h:dataTable id="tabla" class="table table-striped table-responsive-xl table-hover">
-                                    <h:column><f:facet name="header"><h:outputLabel value="Nombre"/></f:facet></h:column>
-                                    <h:column><f:facet name="header"><h:outputLabel value="Fecha de nacimiento"/></f:facet></h:column>
-                                    <h:column><f:facet name="header"><h:outputLabel value="Numero de registro"/></f:facet></h:column>
-                                    <h:column><f:facet name="header"><h:outputLabel value="Registro civil"/></f:facet></h:column>
-                                    <h:column><f:facet name="header"><h:outputLabel value="Numero de certificado"/></f:facet></h:column>
-                                    <h:column><f:facet name="header"><h:outputLabel value="Sexo"/></f:facet></h:column>
-                                    <h:column><f:facet name="header"><h:outputLabel value="Peso"/></f:facet></h:column>
-                                    <h:column><f:facet name="header"><h:outputLabel value="Tipo Doc"/></f:facet></h:column>
-                                    <h:column><f:facet name="header"><h:outputLabel value="Numero Doc"/></f:facet></h:column>
+                                <h:dataTable id="tabla" value="#{funcionarioBean.listaPersonas}" var="i" class="table table-striped table-responsive-xl table-hover">
+                                    <h:column><f:facet name="header"><h:outputLabel value="Nombre"/></f:facet><h:outputLabel value="#{i.personaNombre}"/></h:column>
+                                    <h:column><f:facet name="header"><h:outputLabel value="Fecha de nacimiento"/></f:facet><h:outputLabel value="#{i.personaFecha}"/></h:column>
+                                    <h:column><f:facet name="header"><h:outputLabel value="Numero de registro"/></f:facet><h:outputLabel value="#{i.personaNumeroReg}"/></h:column>
+                                    <h:column><f:facet name="header"><h:outputLabel value="Registro civil"/></f:facet><h:outputLabel value="#{i.personaImgEs}"/></h:column>
+                                    <h:column><f:facet name="header"><h:outputLabel value="Numero de certificado"/></f:facet><h:outputLabel value="#{i.personaNumeroCertificado}"/></h:column>
+                                    <h:column><f:facet name="header"><h:outputLabel value="Sexo"/></f:facet><h:outputLabel value="#{i.personaSexo}"/></h:column>
+                                    <h:column><f:facet name="header"><h:outputLabel value="Peso"/></f:facet><h:outputLabel value="#{i.personaPeso}"/></h:column>
+                                    <h:column><f:facet name="header"><h:outputLabel value="Tipo Doc"/></f:facet><h:outputLabel value="#{i.personaTipoDoc}"/></h:column>
+                                    <h:column><f:facet name="header"><h:outputLabel value="Numero Doc"/></f:facet><h:outputLabel value="#{i.personaNumeroDoc}"/></h:column>
                                     <h:column><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editar">Actualizar</button>
                                         <!--Modal para actualizar ciudadanos-->
                                         <div class="modal" id="editar">
@@ -296,7 +296,7 @@
                                                             <div class="row">
                                                                 <div class="col-12 col-md-6">
                                                                     <h:outputLabel for="tipo" value="Tipo de documento"/>
-                                                                    <h:selectOneMenu id="tipo" class="custom-select" required="true" requiredMessage="Por favor seleccione un tipo!">
+                                                                    <h:selectOneMenu value="#{funcionarioBean.persona.personaTipoDoc}" id="tipo" class="custom-select" required="true" requiredMessage="Por favor seleccione un tipo!">
                                                                         <f:selectItem itemLabel="---Seleccione---"/>
                                                                         <f:selectItem itemValue="CC" itemLabel="CC"/>
                                                                         <f:selectItem itemValue="TI" itemLabel="TI"/>
@@ -311,11 +311,12 @@
                                                                 </div>
                                                                 <div class="col-12">
                                                                     <h:outputLabel for="numero" value="Numero de documento"/>
-                                                                    <h:inputText id="numero" class="form-control" required="true" requiredMessage="Por favor ingrese un valor!" converter="javax.faces.Integer" validatorMessage="Error por favor vuelva a intentarlo!">
+                                                                    <h:inputText value="#{funcionarioBean.persona.personaNumeroDoc}" id="numero" class="form-control" required="true" requiredMessage="Por favor ingrese un valor!" converter="javax.faces.Integer" validatorMessage="Error por favor vuelva a intentarlo!">
                                                                         <f:validateLength maximum="20"/>
                                                                     </h:inputText>
                                                                     <h:message for="numero" class="text-danger"/>
-                                                                    <h:commandButton class="btn btn-primary btn-block mt-3" value="Actualizar"/>
+                                                                    <h:commandButton action="#{funcionarioBean.actualizarCiudadano}" class="btn btn-primary btn-block mt-3" value="Actualizar"/>
+                                                                    <script>#{mensajes.mensaje}</script>
                                                                 </div>
                                                             </div>
                                                         </h:form>
