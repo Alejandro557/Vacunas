@@ -23,10 +23,12 @@
                                         <div class="row">
                                             <div class="col-12 col-md-6">
                                                 <h:outputLabel for="numeroDoc" value="Numero de documento"/>
-                                                <h:inputText value="#{login.numero}" id="numeroDoc" class="form-control" required="true" a:placeholder="Ingresa tu documento" requiredMessage="Ingresa tu documento!" validatorMessage="Error por favor vuelva a intentarlo">
+                                                <h:inputText value="#{login.numero}" id="numeroDoc" class="form-control" required="true" a:placeholder="Ingresa tu documento" requiredMessage="Ingresa tu documento!" validatorMessage="Por favor ingrese un valor correcto!">
                                                     <f:validateLength maximum="40"/>
+                                                    <f:validateRegex pattern="[0-9]*"/>
+                                                    <f:ajax render="numeroDocM" event="keyup"/>
                                                 </h:inputText>
-                                                <h:message for="numeroDoc" class="text-danger"/>
+                                                <h:message id="numeroDocM" for="numeroDoc" class="text-danger"/>
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <h:outputLabel for="tipo" value="Tipo de documento"/>
@@ -35,8 +37,9 @@
                                                     <f:selectItem itemValue="CC" itemLabel="CC"/>
                                                     <f:selectItem itemValue="TI" itemLabel="TI"/>
                                                     <f:selectItem itemValue="Registro civil" itemLabel="Registro civil"/>
+                                                    <f:ajax render="tipoM" event="click"/>
                                                 </h:selectOneMenu>
-                                                <h:message for="tipo" class="text-danger"/>
+                                                <h:message id="tipoM" for="tipo" class="text-danger"/>
                                             </div>
                                             <div class="col-12 mt-3">
                                                 <h:commandButton action="#{login.ingresar}" class="btn btn-primary btn-block" value="Ingresar"/>

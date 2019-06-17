@@ -18,11 +18,13 @@
                             <hr/>
                             <h:form class="mb-3">
                                 <div class="form-inline">
-                                    <h:inputText id="nombre"  a:placeholder="Nombre de vacuna" required="true" requiredMessage="Por favor ingrese una vacuna!" class="form-control rounded-0" maxlength="40" validatorMessage="Error por favor vuelva a intentarlo!">
+                                    <h:inputText value="#{ciudadanoBean.vacuna.vacunaNombre}" id="nombre"  a:placeholder="Nombre de vacuna" required="true" requiredMessage="Por favor ingrese una vacuna!" class="form-control rounded-0" maxlength="40" validatorMessage="Por favor ingrese un nombre valido!">
                                         <f:validateLength maximum="50"/>
+                                        <f:validateRegex pattern="[A-Za-z0-9\s]*"/>
                                     </h:inputText>
-                                    <h:commandButton class="btn btn-primary rounded-0" value="Buscar"/>
+                                    <h:commandButton class="btn btn-primary rounded-0" value="Buscar" action="#{ciudadanoBean.getVacunasPorNombre}"/>
                                     <h:message for="nombre" class="text-danger"/>
+                                    <script>#{mensajes.mensaje}</script>
                                 </div>
                             </h:form>
                             <h:dataTable value="#{ciudadanoBean.listVacunas}" var="i" id="tabla" class="table table-striped table-responsive-md table-hover">

@@ -29,7 +29,22 @@
                                         <h3 class="card-title text-center text-light">Historial de vacunas</h3>
                                     </div>
                                     <div class="card-body">
-                                        <h:dataTable id="vacunas" value="#{funcionarioBean.listaVacunas}" var="i" class="table table-striped table-hover table-responsive-md">
+                                        <h:form>
+                                            <div class="form-inline">
+                                                <h:outputLabel for="nombre" value="Nombre vacuna"/>
+                                                <h:inputText value="#{funcionarioBean.vacuna.vacunaNombre}" id="nombre" class="form-control rounded-0" required="true" requiredMessage="Ingresa un nombre!" a:placeholder="Nombre vacuna" validatorMessage="ingresa un nombre valido!">
+                                                    <f:validateLength maximum="30"/>
+                                                    <f:validateRegex pattern="[A-Za-z-0-9\s]*"/>
+                                                    <f:ajax event="keyup" render="nombreM"/>
+                                                </h:inputText>
+                                                <h:commandButton class="btn btn-primary rounded-0" value="Buscar" action="#{funcionarioBean.getVacunasPorNombre}">
+                                                    <f:ajax render=":vacunasH @form" execute="nombre"/>
+                                                </h:commandButton>
+                                                <script>#{mensajes.mensaje}</script>
+                                                <h:message id="nombreM" for="nombre" class="text-danger ml-1"/>
+                                            </div>
+                                        </h:form>
+                                        <h:dataTable id="vacunasH" value="#{funcionarioBean.listaVacunas}" var="i" class="table table-striped table-hover table-responsive-md">
                                             <h:column><f:facet name="header"><h:outputLabel value="Nombre paciente"/></f:facet><h:outputLabel value="#{i.datosPersonaId.personaNombre}"/></h:column>
                                             <h:column><f:facet name="header"><h:outputLabel value="Nombre vacuna"/></f:facet><h:outputLabel value="#{i.vacunaNombre}"/></h:column>
                                             <h:column><f:facet name="header"><h:outputLabel value="Docis"/></f:facet><h:outputLabel value="#{i.vacunaDocis}"/></h:column>
@@ -151,50 +166,55 @@
                                         <h:form>  <!--Formulario para actualizar una vacuna a una persona-->
                                             <div class="form-group">
                                                 <h:messages globalOnly="true"/>
-                                                <h:outputLabel for="cedula" value="Cedula del ciudadano"/>
-                                                <h:inputText id="cedula" a:placeholder="Cedula" class="form-control" required="true" requiredMessage="Por favor ingrese una cedula!" validatorMessage="Error vuelva a intentarlo!" converter="javax.faces.Integer">
+                                                <h:outputLabel for="cedulaU" value="Cedula del ciudadano"/>
+                                                <h:inputText value="#{funcionarioBean.persona.personaNumeroDoc}" id="cedulaU" a:placeholder="Cedula" class="form-control" required="true" requiredMessage="Por favor ingrese una cedula!" validatorMessage="Ingresa un valor correcto!">
                                                     <f:validateLength maximum="20"/>
+                                                    <f:validateRegex pattern="[0-9]*"/>
                                                 </h:inputText>
-                                                <h:message for="cedula" class="text-danger"/>
+                                                <h:message for="cedulaU" class="text-danger"/>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12 col-md-6">
-                                                    <h:outputLabel for="nombre" value="Nombre de la vacuna"/>
-                                                    <h:inputText id="nombre" a:placeholder="Nombre" class="form-control" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:outputLabel for="nombreU" value="Nombre de la vacuna a actualizar"/>
+                                                    <h:inputText value="#{funcionarioBean.vacuna.vacunaNombre}" id="nombreU" required="true" requiredMessage="Ingresa un nombre!" a:placeholder="Nombre vacuna" class="form-control" validatorMessage="Por favor ingresa un nombre correcto!">
                                                         <f:validateLength maximum="20"/>
+                                                        <f:validateRegex pattern="[A-Za-z0-9\s]*"/>
                                                     </h:inputText>
-                                                    <h:message for="nombre" class="text-danger"/>
+                                                    <h:message for="nombreU" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 col-md-6">
-                                                    <h:outputLabel for="docis" value="Docis"/>
-                                                    <h:inputText id="docis" a:placeholder="Docis" class="form-control" converter="javax.faces.Integer" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:outputLabel for="docisU" value="Docis"/>
+                                                    <h:inputText value="#{funcionarioBean.vacuna.vacunaDocis}" id="docisU" a:placeholder="Docis" class="form-control" required="true" requiredMessage="Ingresa una docis" converter="javax.faces.Integer" converterMessage="Ingresa un valor numerico!" validatorMessage="Por favor ingrese un valor de 11 caracteres!">
                                                         <f:validateLength maximum="11"/>
                                                     </h:inputText>
-                                                    <h:message for="docis" class="text-danger"/>
+                                                    <h:message for="docisU" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 col-md-6">
-                                                    <h:outputLabel for="lote" value="Numero de lote"/>
-                                                    <h:inputText id="lote" a:placeholder="Lote" class="form-control" converter="javax.faces.Integer" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:outputLabel for="loteU" value="Numero de lote"/>
+                                                    <h:inputText value="#{funcionarioBean.vacuna.vacunaNoLote}" id="loteU" a:placeholder="Lote" class="form-control" required="true" requiredMessage="Ingresa un lote!" validatorMessage="Por favor ingrese un valor correcto!">
                                                         <f:validateLength maximum="20"/>
+                                                        <f:validateRegex pattern="[0-9]*"/>
                                                     </h:inputText>
-                                                    <h:message for="lote" class="text-danger"/>
+                                                    <h:message for="loteU" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 col-md-6">
-                                                    <h:outputLabel for="ips" value="IPS"/>
-                                                    <h:inputText id="ips" a:placeholder="IPS" class="form-control" converter="javax.faces.Integer" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:outputLabel for="ipsU" value="IPS"/>
+                                                    <h:inputText value="#{funcionarioBean.vacuna.vacunaIps}" id="ipsU" a:placeholder="IPS" required="true" requiredMessage="Ingresa un IPS" class="form-control" validatorMessage="Por favor ingrese un valor valido!">
                                                         <f:validateLength maximum="30"/>
+                                                        <f:validateRegex pattern="[0-9]*"/>
                                                     </h:inputText>
-                                                    <h:message for="ips" class="text-danger"/>
+                                                    <h:message for="ipsU" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 col-md-6">
-                                                    <h:outputLabel for="proximaVacuna" value="Proxima vacuna"/>
-                                                    <h:inputText id="proximaVacuna" a:placeholder="Año-mes-dia" class="form-control" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:outputLabel for="proximaVacunaU" value="Proxima vacuna"/>
+                                                    <h:inputText value="#{funcionarioBean.vacuna.vacunaProxima}" id="proximaVacunaU" a:placeholder="Año-mes-dia" class="form-control" validatorMessage="Por favor ingrese un valor valido!">
                                                         <f:convertDateTime pattern="YYYY-mm-dd"/>
                                                     </h:inputText>
-                                                    <h:message for="proximaVacuna" class="text-danger"/>
+                                                    <h:message for="proximaVacunaU" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 mt-3">
-                                                    <h:commandButton class="btn btn-primary btn-block" value="Registrar"/>
+                                                    <h:commandButton class="btn btn-primary btn-block" value="Registrar" action="#{funcionarioBean.actualizarVacuna}"/>
+                                                    <script>#{mensajes.mensaje}</script>
                                                 </div>
                                             </div>
                                         </h:form>
@@ -207,11 +227,13 @@
                                         <h3 class="card-title text-center text-light">Crear vacuna</h3>
                                     </div>
                                     <div class="card-body">
-                                        <h:form>  <!--Formulario para crear una vacuna a una persona-->
+                                        <!--Formulario para crear una vacuna a una persona-->
+                                        <h:form>
                                             <div class="form-group">
                                                 <h:messages globalOnly="true"/>
                                                 <h:outputLabel for="cedula" value="Cedula del ciudadano"/>
-                                                <h:inputText id="cedula" a:placeholder="Cedula" class="form-control" required="true" requiredMessage="Por favor ingrese una cedula!" validatorMessage="Error vuelva a intentarlo!" converter="javax.faces.Integer">
+                                                <h:inputText value="#{funcionarioBean.persona.personaNumeroDoc}" id="cedula" a:placeholder="Cedula" class="form-control" required="true" requiredMessage="Por favor ingrese una cedula!" validatorMessage="Ingresa un valor valido!">
+                                                    <f:validateRegex pattern="[0-9]*"/>
                                                     <f:validateLength maximum="20"/>
                                                 </h:inputText>
                                                 <h:message for="cedula" class="text-danger"/>
@@ -219,41 +241,69 @@
                                             <div class="row">
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="nombre" value="Nombre de la vacuna"/>
-                                                    <h:inputText id="nombre" a:placeholder="Nombre" class="form-control" required="true" requiredMessage="Ingrese un nombre!" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:inputText value="#{funcionarioBean.vacuna.vacunaNombre}" id="nombre" a:placeholder="Nombre" class="form-control" required="true" requiredMessage="Ingrese un nombre!" validatorMessage="Por favor ingrese un nombre valido!">
                                                         <f:validateLength maximum="20"/>
+                                                        <f:validateRegex pattern="[A-za-z0-9\s]*"/>
                                                     </h:inputText>
                                                     <h:message for="nombre" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="docis" value="Docis"/>
-                                                    <h:inputText id="docis" a:placeholder="Docis" class="form-control" converter="javax.faces.Integer" required="true" requiredMessage="Por favor ingrese una docis!" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:inputText value="#{funcionarioBean.vacuna.vacunaDocis}" id="docis" a:placeholder="Docis" class="form-control" converter="javax.faces.Integer" required="true" requiredMessage="Por favor ingrese una docis!" validatorMessage="Ingrese valores con un maximo de 11!" converterMessage="Ingresa valores numericos!">
                                                         <f:validateLength maximum="11"/>
                                                     </h:inputText>
                                                     <h:message for="docis" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="lote" value="Numero de lote"/>
-                                                    <h:inputText id="lote" a:placeholder="Lote" class="form-control" converter="javax.faces.Integer" required="true" requiredMessage="Por favor ingrese un lote!" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:inputText value="#{funcionarioBean.vacuna.vacunaNoLote}" id="lote" a:placeholder="Lote" class="form-control" required="true" requiredMessage="Por favor ingrese un lote!" validatorMessage="Error vuelva a intentarlo!">
                                                         <f:validateLength maximum="20"/>
+                                                        <f:validateRegex pattern="[0-9]*"/>
                                                     </h:inputText>
                                                     <h:message for="lote" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="ips" value="IPS"/>
-                                                    <h:inputText id="ips" a:placeholder="IPS" class="form-control" converter="javax.faces.Integer" required="true" requiredMessage="Por favor ingrese un ips!" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:inputText value="#{funcionarioBean.vacuna.vacunaIps}" id="ips" a:placeholder="IPS" class="form-control" required="true" requiredMessage="Por favor ingrese un ips!" validatorMessage="Error vuelva a intentarlo!">
                                                         <f:validateLength maximum="30"/>
+                                                        <f:validateRegex pattern="[0-9]*"/>
                                                     </h:inputText>
                                                     <h:message for="ips" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="proximaVacuna" value="Proxima vacuna"/>
-                                                    <h:inputText id="proximaVacuna" a:placeholder="Año-mes-dia" class="form-control" required="true" requiredMessage="Por favor ingrese una fecha!" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:inputText value="#{funcionarioBean.vacuna.vacunaProxima}" id="proximaVacuna" a:placeholder="Año-mes-dia" class="form-control" required="true" requiredMessage="Por favor ingrese una fecha!" validatorMessage="Error vuelva a intentarlo!">
                                                         <f:convertDateTime pattern="YYYY-mm-dd"/>
                                                     </h:inputText>
                                                     <h:message for="proximaVacuna" class="text-danger"/>
                                                 </div>
+                                                <div class="col-12 col-md-6">
+                                                    <h:outputLabel for="personaVacuna" value="Nombre de la persona que vacuna"/>
+                                                    <h:inputText value="#{funcionarioBean.personaVacuna.personaVacunaNombre}" id="personaVacuna" a:placeholder="Nombre" class="form-control" required="true" requiredMessage="Ingresa un nombre" validatorMessage="Ingresa un nombre correcto!">
+                                                        <f:validateLength maximum="20"/>
+                                                        <f:validateRegex pattern="[A-Za-z\s]*"/>
+                                                    </h:inputText>
+                                                    <h:message for="personaVacuna" class="text-danger"/>
+                                                </div>
+                                                <div class="col-12 col-md-6">
+                                                    <h:outputLabel for="documentoVacuna" value="Numero de documento de la persona que vacuna"/>
+                                                    <h:inputText value="#{funcionarioBean.personaVacuna.personaVacunaDoc}" id="documentoVacuna" a:placeholder="Numero de documento" class="form-control" required="true" requiredMessage="Ingresa un numero de documento!" validatorMessage="Ingresa un documento valido!">
+                                                        <f:validateLength maximum="15"/>
+                                                        <f:validateRegex pattern="[0-9]*"/>
+                                                    </h:inputText>
+                                                    <h:message for="documentoVacuna" class="text-danger"/>
+                                                </div>
+                                                <div class="col-12 col-md-6">
+                                                    <h:outputLabel for="laboratorio" value="Nombre del laboratorio"/>
+                                                    <h:inputText value="#{funcionarioBean.laboratorio.laboratorioNombre}" id="laboratorio" class="form-control" required="true" requiredMessage="Ingresa un nombre!" validatorMessage="Ingresa un nombre valido!" a:placeholder="Nombre laboratorio">
+                                                        <f:validateLength maximum="20"/>
+                                                        <f:validateRegex pattern="[A-Za-z\s]*"/>
+                                                    </h:inputText>
+                                                    <h:message for="laboratorio" class="text-danger"/>
+                                                </div>
                                                 <div class="col-12 mt-3">
-                                                    <h:commandButton class="btn btn-primary btn-block" value="Registrar"/>
+                                                    <h:commandButton class="btn btn-primary btn-block" action="#{funcionarioBean.crearVacuna}" value="Registrar"/>
+                                                    <script>#{mensajes.mensaje}</script>
                                                 </div>
                                             </div>
                                         </h:form>
@@ -263,12 +313,15 @@
                             <div class="tab-pane fade show active" id="actualizarCiudadano">
                                 <h3 class="text-center">Ciudadanos registrados</h3>
                                 <hr/>
-                                <h:form class="mb-3">  <!--formulario para ver los ciudadanos registrados-->
+                                <!--formulario para ver los ciudadanos registrados por su nombre-->
+                                <h:form class="mb-3">
                                     <div class="form-inline">
-                                        <h:inputText id="nombre" required="true" a:placeholder="Nombre ciudadano" title="Ingresa el nombre del ciudadano que deseas consultar" requiredMessage="Por favor ingrese un nombre!" validatorMessage="Erorr vuelva a intnetarlo!" class="form-control rounded-0" maxlength="50">
+                                        <h:inputText id="nombre" value="#{funcionarioBean.persona.personaNombre}" required="true" a:placeholder="Nombre ciudadano" title="Ingresa el nombre del ciudadano que deseas consultar" requiredMessage="Por favor ingrese un nombre!" validatorMessage="Por favor ingrese un nombre!" class="form-control rounded-0" maxlength="50">
+                                            <f:validateRegex pattern="[A-Za-z]*"/>
                                             <f:validateLength maximum="50"/>
                                         </h:inputText>
-                                        <h:commandButton class="btn btn-primary rounded-0" value="Buscar"/>
+                                        <h:commandButton class="btn btn-primary rounded-0" value="Buscar" action="#{funcionarioBean.getPersonasForNombre}"/>
+                                        <script>#{mensajes.mensaje}</script>
                                         <h:message for="nombre" class="text-danger"/>
                                     </div>
                                 </h:form>
@@ -296,7 +349,7 @@
                                                             <div class="row">
                                                                 <div class="col-12 col-md-6">
                                                                     <h:outputLabel for="tipo" value="Tipo de documento"/>
-                                                                    <h:selectOneMenu value="#{funcionarioBean.persona.personaTipoDoc}" id="tipo" class="custom-select" required="true" requiredMessage="Por favor seleccione un tipo!">
+                                                                    <h:selectOneMenu value="#{funcionarioBean.tipoDocumento}" id="tipo" class="custom-select" required="true" requiredMessage="Por favor seleccione un tipo!">
                                                                         <f:selectItem itemLabel="---Seleccione---"/>
                                                                         <f:selectItem itemValue="CC" itemLabel="CC"/>
                                                                         <f:selectItem itemValue="TI" itemLabel="TI"/>
@@ -307,15 +360,19 @@
                                                                 <div class="col-12 col-md-6 custom-file">
                                                                     <h:inputFile id="documento" class="custom-file-input" required="true" requiredMessage="Por favor ingrese un documento"/>
                                                                     <h:outputLabel for="documento" class="custom-file-label" value="Documento escaneado"/>
-                                                                    <h:message for="documento"/>
+                                                                    <h:message id="mensajeDocumento" for="documento"/>
                                                                 </div>
                                                                 <div class="col-12">
                                                                     <h:outputLabel for="numero" value="Numero de documento"/>
-                                                                    <h:inputText value="#{funcionarioBean.persona.personaNumeroDoc}" id="numero" class="form-control" required="true" requiredMessage="Por favor ingrese un valor!" converter="javax.faces.Integer" validatorMessage="Error por favor vuelva a intentarlo!">
+                                                                    <h:inputText value="#{funcionarioBean.numeroCedula}" id="numero" class="form-control" required="true" requiredMessage="Por favor ingrese un valor!" validatorMessage="Error por favor ingrese numeros!">
                                                                         <f:validateLength maximum="20"/>
+                                                                        <f:validateRegex pattern="[0-9]*"/>
+                                                                        <f:ajax render="mensajeNumero" event="keyup"/>
                                                                     </h:inputText>
-                                                                    <h:message for="numero" class="text-danger"/>
-                                                                    <h:commandButton action="#{funcionarioBean.actualizarCiudadano}" class="btn btn-primary btn-block mt-3" value="Actualizar"/>
+                                                                    <h:message id="mensajeNumero" for="numero" class="text-danger"/>
+                                                                    <h:commandButton action="#{funcionarioBean.actualizarCiudadano(i)}" class="btn btn-primary btn-block mt-3" value="Actualizar">
+                                                                        <f:ajax execute="tipo  numero" render="@all"/>
+                                                                    </h:commandButton>
                                                                     <script>#{mensajes.mensaje}</script>
                                                                 </div>
                                                             </div>

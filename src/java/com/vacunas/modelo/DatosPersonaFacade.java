@@ -6,6 +6,7 @@
 package com.vacunas.modelo;
 
 import com.vacunas.entity.DatosPersona;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -47,6 +48,32 @@ public class DatosPersonaFacade extends AbstractFacade<DatosPersona> {
             return persona2;
         } catch (Exception e) {
             System.out.println("Error en el modelo datosPersonaFacade.login");
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public List<DatosPersona> getPersonaPorNombre(DatosPersona persona) {
+        List<DatosPersona> listPersonas = new ArrayList<>();
+        try {
+            query = em.createQuery("select d from DatosPersona d where d.personaNombre = :nombre");
+            query.setParameter("nombre", persona.getPersonaNombre());
+            listPersonas = query.getResultList();
+            return listPersonas;
+        } catch (Exception e) {
+            System.out.println("Error en el modelo DatosPersonas getPersonaPorNombre");
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public DatosPersona getPersonaPorCedula(DatosPersona persona) {
+        try {
+            query = em.createQuery("select d from DatosPersona d where d.personaNumeroDoc = :numero");
+            query.setParameter("numero", persona.getPersonaNumeroDoc());
+            return (DatosPersona) query.getSingleResult();
+        } catch (Exception e) {
+            System.out.println("Error en el modelo DatosPersonaFacade.getPersonaPorCedula");
             e.printStackTrace();
         }
         return null;
