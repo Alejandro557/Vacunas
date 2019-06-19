@@ -6,11 +6,13 @@
 package com.vacunas.modelo;
 
 import java.util.List;
+import javax.annotation.security.DeclareRoles;
 import javax.persistence.EntityManager;
 
 /**
  *
  * @author Alejandro
+ * @param <T>
  */
 public abstract class AbstractFacade<T> {
 

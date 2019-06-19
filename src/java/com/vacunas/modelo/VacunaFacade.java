@@ -9,6 +9,9 @@ import com.vacunas.entity.DatosPersona;
 import com.vacunas.entity.Vacuna;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +22,8 @@ import javax.persistence.Query;
  * @author Alejandro
  */
 @Stateless
+@DeclareRoles({"ROLE_ADMIN", "ROLE_USER"})
+@RolesAllowed({"ROLE_ADMIN", "ROLE_USER"})
 public class VacunaFacade extends AbstractFacade<Vacuna> {
 
     @PersistenceContext(unitName = "VacunasPU")
@@ -34,6 +39,7 @@ public class VacunaFacade extends AbstractFacade<Vacuna> {
         super(Vacuna.class);
     }
     
+    @PermitAll
     public List<Vacuna> getVacunasPorPersona(DatosPersona persona) {
         List<Vacuna> listVacunas = new ArrayList<>();
         try {
@@ -47,6 +53,7 @@ public class VacunaFacade extends AbstractFacade<Vacuna> {
         return null;
     }
     
+    @RolesAllowed("ROLE_ADMIN")
     public boolean registrarVacuna(Vacuna vacuna) {
         try{
             em.persist(vacuna);
@@ -58,6 +65,7 @@ public class VacunaFacade extends AbstractFacade<Vacuna> {
         return false;
     }
     
+    @RolesAllowed("ROLE_ADMIN")
     public boolean actualizarVacuna(Vacuna vacuna) {
         try {
             query = em.createQuery("update Vacuna v set v.vacunaDocis = :docis, v.vacunaProxima = :proxima, v.vacunaIps = :ips, v.vacunaNoLote = :lote where v.vacunaNombre = :nombre and v.datosPersonaId.personaNumeroDoc = :numero");
@@ -75,6 +83,7 @@ public class VacunaFacade extends AbstractFacade<Vacuna> {
         return false;
     }
     
+    @PermitAll
     public List<Vacuna> getVacunasPorNombre(Vacuna vacuna) {
         List<Vacuna> listVacuna = new ArrayList<>();
         try {

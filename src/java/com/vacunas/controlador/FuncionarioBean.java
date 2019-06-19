@@ -5,16 +5,22 @@
  */
 package com.vacunas.controlador;
 
+import com.vacunas.entity.Carnet;
 import com.vacunas.entity.DatosPersona;
 import com.vacunas.entity.FuncionarioSalud;
+import com.vacunas.entity.Institucion;
 import com.vacunas.entity.Laboratorio;
+import com.vacunas.entity.PersonaResponsable;
 import com.vacunas.entity.PersonaVacuna;
 import com.vacunas.entity.Vacuna;
 import com.vacunas.helperBean.Fecha;
 import com.vacunas.helperBean.Mensajes;
+import com.vacunas.modelo.CarnetFacade;
 import com.vacunas.modelo.DatosPersonaFacade;
 import com.vacunas.modelo.FuncionarioSaludFacade;
+import com.vacunas.modelo.InstitucionFacade;
 import com.vacunas.modelo.LaboratorioFacade;
+import com.vacunas.modelo.PersonaResponsableFacade;
 import com.vacunas.modelo.PersonaVacunaFacade;
 import com.vacunas.modelo.VacunaFacade;
 import javax.inject.Named;
@@ -55,7 +61,16 @@ public class FuncionarioBean implements Serializable {
     @EJB
     private LaboratorioFacade laboratorioDAO;
     private Fecha fecha = new Fecha();
-
+    private Carnet carnet = new Carnet();
+    private Institucion institucion = new Institucion();
+    @EJB
+    private InstitucionFacade institucionDAO;
+    private PersonaResponsable responsable = new PersonaResponsable();
+    @EJB
+    private PersonaResponsableFacade responsableDAO;
+    @EJB
+    private CarnetFacade carnetDAO;
+    
     /**
      * Creates a new instance of FuncionarioBean
      */
@@ -68,9 +83,26 @@ public class FuncionarioBean implements Serializable {
     public boolean login(String tipo, String numero) {
         funcionario.setFuncionarioSaludTipo(tipo);
         funcionario.setFuncionarioSaludCedula(numero);
-        return funcionarioDAO.login(funcionario);
+        funcionario = funcionarioDAO.login(funcionario);
+        return funcionario.getFuncionarioSaludId() != null;
     }
 
+    /*
+    *Metodo para crear carnet
+    */
+    public void crearCarnet() {
+        institucionDAO.create(getInstitucion());
+        responsableDAO.create(getResponsable());
+        persona.setPersonaResponsableId(getResponsable());
+        personaDAO.create(persona);
+        getCarnet().setDatosPersonaId(persona);
+        getCarnet().setFuncionarioSaludId(funcionario);
+        getCarnet().setInstitucionId(getInstitucion());
+        carnetDAO.create(getCarnet());
+        mensaje.setMensaje("mensajes('Echo!', 'El carnet fue creado!', 'success');");
+        getAllCiudadanos();
+    }
+    
     /*
     *Metodo para crear vacuna a una persona
      */
@@ -82,7 +114,7 @@ public class FuncionarioBean implements Serializable {
             vacuna.setDatosPersonaId(persona);
             vacuna.setLaboratorioId(laboratorio);
             vacuna.setPersonaVacunaId(personaVacuna);
-            vacuna.setVacunaFecha(fecha.getFecha());
+            vacuna.setVacunaFecha(getFecha().getFecha());
             if (vacunaDAO.registrarVacuna(vacuna)) {
                 mensaje.setMensaje("mensajes('Echo!', 'La vacuna fue creada!', 'success');");
                 GetAllVacunas();
@@ -313,6 +345,48 @@ public class FuncionarioBean implements Serializable {
      */
     public void setFecha(Fecha fecha) {
         this.fecha = fecha;
+    }
+
+    /**
+     * @return the carnet
+     */
+    public Carnet getCarnet() {
+        return carnet;
+    }
+
+    /**
+     * @param carnet the carnet to set
+     */
+    public void setCarnet(Carnet carnet) {
+        this.carnet = carnet;
+    }
+
+    /**
+     * @return the institucion
+     */
+    public Institucion getInstitucion() {
+        return institucion;
+    }
+
+    /**
+     * @param institucion the institucion to set
+     */
+    public void setInstitucion(Institucion institucion) {
+        this.institucion = institucion;
+    }
+
+    /**
+     * @return the responsable
+     */
+    public PersonaResponsable getResponsable() {
+        return responsable;
+    }
+
+    /**
+     * @param responsable the responsable to set
+     */
+    public void setResponsable(PersonaResponsable responsable) {
+        this.responsable = responsable;
     }
 
 }

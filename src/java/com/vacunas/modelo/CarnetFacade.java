@@ -6,6 +6,8 @@
 package com.vacunas.modelo;
 
 import com.vacunas.entity.Carnet;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,6 +17,8 @@ import javax.persistence.PersistenceContext;
  * @author Alejandro
  */
 @Stateless
+@DeclareRoles({"ROLE_ADMIN","ROLE_USER"})
+@RolesAllowed({"ROLE_ADMIN"})
 public class CarnetFacade extends AbstractFacade<Carnet> {
 
     @PersistenceContext(unitName = "VacunasPU")
@@ -24,7 +28,7 @@ public class CarnetFacade extends AbstractFacade<Carnet> {
     protected EntityManager getEntityManager() {
         return em;
     }
-
+    
     public CarnetFacade() {
         super(Carnet.class);
     }

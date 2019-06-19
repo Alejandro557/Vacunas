@@ -6,6 +6,7 @@
 package com.vacunas.controlador;
 
 import com.vacunas.helperBean.Mensajes;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -18,8 +19,8 @@ import javax.inject.Inject;
 @RequestScoped
 public class LoginBean {
     
-    private String tipo;
-    private String numero;
+    private String tipo = "";
+    private String numero = "";
     @Inject
     private CiudadanoBean ciudadanoControlador;
     @Inject

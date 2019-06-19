@@ -9,6 +9,7 @@ import com.vacunas.entity.DatosPersona;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.annotation.security.*;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +20,8 @@ import javax.persistence.Query;
  * @author Alejandro
  */
 @Stateless
+@DeclareRoles({"ROLE_ADMIN", "ROLE_USER"})
+@RolesAllowed({"ROLE_ADMIN", "ROLE_USER"})
 public class DatosPersonaFacade extends AbstractFacade<DatosPersona> {
 
     @PersistenceContext(unitName = "VacunasPU")
@@ -34,6 +37,7 @@ public class DatosPersonaFacade extends AbstractFacade<DatosPersona> {
         super(DatosPersona.class);
     }
     
+    @PermitAll
     public DatosPersona login(DatosPersona persona) {
         DatosPersona persona2 = new DatosPersona();
         try {
@@ -53,6 +57,7 @@ public class DatosPersonaFacade extends AbstractFacade<DatosPersona> {
         return null;
     }
     
+    @RolesAllowed("ROLE_ADMIN")
     public List<DatosPersona> getPersonaPorNombre(DatosPersona persona) {
         List<DatosPersona> listPersonas = new ArrayList<>();
         try {
@@ -67,6 +72,7 @@ public class DatosPersonaFacade extends AbstractFacade<DatosPersona> {
         return null;
     }
     
+    @RolesAllowed("ROLE_ADMIN")
     public DatosPersona getPersonaPorCedula(DatosPersona persona) {
         try {
             query = em.createQuery("select d from DatosPersona d where d.personaNumeroDoc = :numero");

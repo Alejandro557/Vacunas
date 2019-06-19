@@ -63,25 +63,30 @@
                                         <h3 class="text-center card-title text-light">Crear carnet</h3>
                                     </div>
                                     <div class="card-body">
-                                        <h:form enctype="multipart/form-data">  <!--Formulario para crear un carnet-->
+                                        <!--Formulario para crear un carnet-->
+                                        <h:form enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="nombre" value="Nombre"/>
-                                                    <h:inputText id="nombre" class="form-control" required="true" requiredMessage="Ingresa un nombre!" validatorMessage="Error por favor vualva a intentnarlo!" a:placeholder="Nombre">
+                                                    <h:inputText value="#{funcionarioBean.persona.personaNombre}" id="nombre" class="form-control" required="true" requiredMessage="Ingresa un nombre!" validatorMessage="Ingresa un nombre valido!" a:placeholder="Nombre">
+                                                        <f:validateRegex pattern="[A-Za-z\s]*"/>
                                                         <f:validateLength maximum="20"/>
                                                     </h:inputText>
                                                     <h:message for="nombre" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="fechaNacimiento" value="Fecha de nacimiento"/>
-                                                    <h:inputText id="fechaNacimiento" a:placeholder="Año-mes-dia" class="form-control" required="true" requiredMessage="Por favor ingrese una fecha!" validatorMessage="Error por favor intentelo de nuevo!">
+                                                    <h:inputText value="#{funcionarioBean.persona.personaFecha}" id="fechaNacimiento" a:placeholder="Año-mes-dia" class="form-control" required="true" requiredMessage="Por favor ingrese una fecha!" validatorMessage="Ingresa un afecha valida!">
                                                         <f:convertDateTime pattern="YYYY-mm-dd"/>
                                                     </h:inputText>
                                                     <h:message for="fechaNacimiento" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="numeroReg" value="Numero de registro"/>
-                                                    <h:inputText id="numeroReg" a:placeholder="Numero de registro" class="form-control" required="true" requiredMessage="Por favor ingrese un numero de registro!" validatorMessage="Error vuelva a intentarlo!" converter="javax.faces.Integer"/>
+                                                    <h:inputText value="#{funcionarioBean.persona.personaNumeroReg}" id="numeroReg" a:placeholder="Numero de registro" class="form-control" required="true" requiredMessage="Por favor ingrese un numero de registro!" validatorMessage="Ingresa un valor numerico correcto!">
+                                                        <f:validateRegex pattern="[0-9]*"/>
+                                                        <f:validateLength maximum="20"/>
+                                                    </h:inputText>
                                                     <h:message for="numeroReg" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 col-md-6 mt-4">
@@ -93,14 +98,15 @@
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="numeroCertificado" value="Numero de certificado"/>
-                                                    <h:inputText id="numeroCertificado" a:placeholder="Numero de certificado" class="form-control" required="true" requiredMessage="Error por favor ingrese un valor!" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:inputText value="#{funcionarioBean.persona.personaNumeroCertificado}" id="numeroCertificado" a:placeholder="Numero de certificado" class="form-control" required="true" requiredMessage="Error por favor ingrese un valor!" validatorMessage="Ingresa un numero correcto!">
                                                         <f:validateLength maximum="50"/>
+                                                        <f:validateRegex pattern="[0-9]*"/>
                                                     </h:inputText>
                                                     <h:message for="numeroCertificado" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="sexo" value="Sexo"/>
-                                                    <h:selectOneMenu id="sexo" required="true" requiredMessage="Selecciona un sexo!" class="custom-select">
+                                                    <h:selectOneMenu value="#{funcionarioBean.persona.personaSexo}" id="sexo" required="true" requiredMessage="Selecciona un sexo!" class="custom-select">
                                                         <f:selectItem itemLabel="---seleccionar---"/>
                                                         <f:selectItem itemValue="Hombre" itemLabel="Hombre"/>
                                                         <f:selectItem itemValue="Mujer" itemLabel="Mujer"/>
@@ -110,8 +116,29 @@
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="peso" value="Peso"/>
-                                                    <h:inputText id="peso" class="form-control" a:placeholder="Peso" converter="javax.faces.Integer" required="true" requiredMessage="Por favor ingrese un peso!" validatorMessage="Erorr por favor vuelva a intentarlo!"/>
+                                                    <h:inputText value="#{funcionarioBean.persona.personaPeso}" id="peso" class="form-control" converter="javax.faces.Integer" a:placeholder="Peso" required="true" requiredMessage="Por favor ingrese un peso!" validatorMessage="Ingresa un maximo de 10 valores!" converterMessage="Ingresa valores numericos">
+                                                        <f:validateLength maximum="10"/>
+                                                    </h:inputText>
                                                     <h:message for="peso" class="text-danger"/>
+                                                </div>
+                                                <div class="col-12 col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-6">
+                                                            <h:outputLabel for="tipoDoc" value="Tipo de documento"/>
+                                                            <h:selectOneMenu value="#{funcionarioBean.persona.personaTipoDoc}" id="tipoDoc" class="custom-select">
+                                                                <f:selectItem itemValue="CC" itemLabel="CC"/>
+                                                                <f:selectItem itemValue="TI" itemLabel="TI"/>
+                                                                <f:selectItem itemValue="Registro civil" itemLabel="Registro civil"/>
+                                                            </h:selectOneMenu>  
+                                                        </div>
+                                                        <div class="col-12 col-md-6">
+                                                            <h:outputLabel for="numeroDoc" value="Numero de documento"/>
+                                                            <h:inputText value="#{funcionarioBean.persona.personaNumeroDoc}" id="numeroDoc" class="form-control" required="true" requiredMessage="Ingresa un valor!" validatorMessage="ingresa un numero valido!" a:placeholder="Numero de documento">
+                                                                <f:validateLength maximum="15"/>
+                                                                <f:validateRegex pattern="[0-9]*"/>
+                                                            </h:inputText>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <h3 class="text-center">Responsable</h3>
@@ -119,22 +146,24 @@
                                             <div class="row">
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="nombreResponsable" value="Nombre responsable"/>
-                                                    <h:inputText id="nombreResponsable" a:placeholder="Nombre del responsable" class="form-control" required="true" requiredMessage="Ingrese un nombre por favor!" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:inputText value="#{funcionarioBean.responsable.responsableNombre}" id="nombreResponsable" a:placeholder="Nombre del responsable" class="form-control" required="true" requiredMessage="Ingrese un nombre por favor!" validatorMessage="ingresa un nombre valido!">
+                                                        <f:validateRegex pattern="[A-Za-z\s]*"/>
                                                         <f:validateLength maximum="20"/>
                                                     </h:inputText>
                                                     <h:message for="nombreResponsable" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="direccion" value="Dirección"/>
-                                                    <h:inputText id="direccion" a:placeholder="Dirección" class="form-control" required="true" requiredMessage="Por favor ingresa una dirección!" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:inputText value="#{funcionarioBean.responsable.responsableDireccion}" id="direccion" a:placeholder="Dirección" class="form-control" required="true" requiredMessage="Por favor ingresa una dirección!" validatorMessage="Ingresa un maximo de 50 caracteres!">
                                                         <f:validateLength maximum="50"/>
                                                     </h:inputText>
                                                     <h:message for="direccion" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="ciudad" value="Ciudad"/>
-                                                    <h:inputText id="ciudad" class="form-control" a:placeholder="Ciudad" required="true" requiredMessage="Por favor ingrese una ciudad!" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:inputText value="#{funcionarioBean.responsable.responsableCiudad}" id="ciudad" class="form-control" a:placeholder="Ciudad" required="true" requiredMessage="Por favor ingrese una ciudad!" validatorMessage="Ingresa una ciudad correcta!">
                                                         <f:validateLength maximum="30"/>
+                                                        <f:validateRegex pattern="[A-Za-z\s]*"/>
                                                     </h:inputText>
                                                     <h:message for="ciudad" class="text-danger"/>
                                                 </div>
@@ -144,13 +173,15 @@
                                             <div class="row">
                                                 <div class="col-12 col-md-6">
                                                     <h:outputLabel for="institucionNombre" value="Nombre de la institución"/>
-                                                    <h:inputText id="institucionNombre" a:placeholder="Nombre de institución" class="form-control" required="true" requiredMessage="Ingrese el nombre de una institución!" validatorMessage="Error vuelva a intentarlo!">
+                                                    <h:inputText value="#{funcionarioBean.institucion.institucionNombre}" id="institucionNombre" a:placeholder="Nombre de institución" class="form-control" required="true" requiredMessage="Ingrese el nombre de una institución!" validatorMessage="Ingresa un nombre correcto!">
+                                                        <f:validateRegex pattern="[A-Za-z\s]*"/>
                                                         <f:validateLength maximum="20"/>
                                                     </h:inputText>
                                                     <h:message for="institucionNombre" class="text-danger"/>
                                                 </div>
                                                 <div class="col-12 mt-3">
-                                                    <h:commandButton class="btn btn-primary btn-block" value="Crear"/>
+                                                    <h:commandButton class="btn btn-primary btn-block" value="Crear" action="#{funcionarioBean.crearCarnet}"/>
+                                                    <script>#{mensajes.mensaje}</script>
                                                 </div>
                                             </div>
                                         </h:form>

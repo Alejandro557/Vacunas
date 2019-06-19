@@ -6,6 +6,8 @@
 package com.vacunas.modelo;
 
 import com.vacunas.entity.PersonaResponsable;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,6 +17,8 @@ import javax.persistence.PersistenceContext;
  * @author Alejandro
  */
 @Stateless
+@DeclareRoles({"ROLE_ADMIN", "ROLE_USER"})
+@RolesAllowed("ROLE_ADMIN")
 public class PersonaResponsableFacade extends AbstractFacade<PersonaResponsable> {
 
     @PersistenceContext(unitName = "VacunasPU")

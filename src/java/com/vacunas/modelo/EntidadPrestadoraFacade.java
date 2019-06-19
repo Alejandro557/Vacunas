@@ -6,6 +6,7 @@
 package com.vacunas.modelo;
 
 import com.vacunas.entity.EntidadPrestadora;
+import javax.annotation.security.*;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,6 +16,8 @@ import javax.persistence.PersistenceContext;
  * @author Alejandro
  */
 @Stateless
+@DeclareRoles({"ROLE_ADMIN", "ROLE_USER"})
+@RolesAllowed({"ROLE_ADMIN"})
 public class EntidadPrestadoraFacade extends AbstractFacade<EntidadPrestadora> {
 
     @PersistenceContext(unitName = "VacunasPU")
